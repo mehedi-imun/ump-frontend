@@ -8,6 +8,7 @@
     "deploy":"gh-pages -d build",
     "dev": "vite --port 3000",
     "build": "tsc && vite build",
+    "predeploy": "npm run build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

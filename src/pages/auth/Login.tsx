@@ -27,6 +27,7 @@ const Login = () => {
       reset();
       navigate(`/${user.role}/dashboard`);
     } catch (error) {
+      console.log(error)
       toast.error("something went wrong", { id: toastId });
     }
   };

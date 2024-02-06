@@ -27,7 +27,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 > = async (args, api, extraOption): Promise<any> => {
   let result = await baseQuery(args, api, extraOption);
-  console.log(result.error);
   if (result.error?.status === 401) {
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
       method: "post",

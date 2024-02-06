@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Row } from "antd";
 import { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -13,16 +14,11 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-
-  // const { register, reset, handleSubmit } = useForm({
-  //  
-  // });
   const  defaultValues =  {
       id: "A-0001",
       password: "admin123",
     }
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
     const toastId = toast.loading("Loading");
     try {
       const res = await login(data).unwrap();
@@ -31,9 +27,8 @@ const Login = () => {
       toast.success("success login", { id: toastId });
       // reset();
       navigate(`/${user.role}/dashboard`);
-    } catch (error) {
-      console.log(error);
-      toast.error("something went wrong", { id: toastId });
+    } catch (error:any) {
+      toast.error(error.data.message, { id: toastId });
     }
   };
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BaseQueryApi,
   BaseQueryFn,
@@ -8,6 +9,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { logOut, setUser } from "../../redux/features/auth/authSlice";
 import { RootState } from "../store";
+import { toast } from "sonner";
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api/v1",
   credentials: "include",
@@ -26,7 +28,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   DefinitionType
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 > = async (args, api, extraOption): Promise<any> => {
-  let result = await baseQuery(args, api, extraOption);
+  let result:any = await baseQuery(args, api, extraOption);
+  if(result?.error?.status === 404){
+    toast(result?.error.data.message)
+  }
   if (result.error?.status === 401) {
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
       method: "post",
